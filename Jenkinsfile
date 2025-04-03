@@ -3,7 +3,7 @@ pipeline{
     stages{
         stage('authentication'){
                     steps {
-                        bat 'echo  %MY_SECRET%'
+                        bat 'echo  %idClient%'
                     }
         }
         stage('build'){
