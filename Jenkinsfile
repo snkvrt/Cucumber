@@ -1,6 +1,11 @@
 pipeline{
     agent any
     stages{
+        stage('authentication'){
+                    steps {
+                        bat 'curl -H "Content-Type: application/json" -X POST --data '{ "client_id": %idClient%,"client_secret": %SecretClient% }'  https://xray.cloud.getxray.app/api/v2/authenticate'
+                    }
+        }
         stage('build'){
             steps{
                 bat 'mvn clean'
