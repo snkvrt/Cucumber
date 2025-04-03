@@ -1,10 +1,23 @@
-pipeline {
+pipeline{
     agent any
-    stages {
-        stage('Test') {
-            steps {
-                bat 'mvn test'
-                }
+    stages{
+        stage('build'){
+            steps{
+                bat 'mvn clean'
             }
         }
+        stage('test'){
+            steps{
+                bat 'mvn test  -Dcucumber.filter.tags="@KO"'
+            }
+            
+        }
+       
+    }
+    post{
+        always{
+             junit 'target/surefire-reports/*.xml'
+             cucumber fileIncludePattern :'target/cucumber.json'
+        }
+    }
 }
