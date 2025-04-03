@@ -9,7 +9,8 @@ import org.junit.runner.RunWith;
         features = "src/test/resources/features",
         glue = {"steps","features"},
 
-        plugin = {"pretty", "html:target/cucumber-reports.html", "json:target/cucumber.json"}
+        plugin = {"pretty", "html:target/cucumber-reports.html", "json:target/cucumber.json"},
+        tags = "@TNR"
 )
 public class RunnerTest {
 
