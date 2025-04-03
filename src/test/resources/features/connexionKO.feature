@@ -1,5 +1,5 @@
 Feature: Connexion échouée
-  
+
   Scenario: Connexion échouée
     Given l'utilisateur est sur la page de connexion "https://www.saucedemo.com/"
     When l'utilisateur insère son identifiant invalide dans le champ associé "stndard_user"
