@@ -2,6 +2,8 @@ pipeline {
     agent any
 
     environment {
+        // Variables d'environnement pour l'authentification Xray
+        PATH = "C:\\Users\\IB\\.jenkins\\workspace\\pipCucumberXray"
         XRAY_AUTH_URL = 'https://xray.cloud.getxray.app/api/v2/authenticate'
         XRAY_EXPORT_URL = 'https://xray.cloud.getxray.app/api/v2/export/cucumber?keys=POEI20252-526'
         CLIENT_ID = 'DA94515D482B438FA35A924E4B840298'
@@ -37,7 +39,7 @@ pipeline {
             steps {
                 script {
                     // 1. Vérifier que le fichier existe
-                    def zipExists = fileExists 'features.zip'
+                    def zipExists = fileExists "${env.WORKSPACE}\\features.zip"
                     if (!zipExists) {
                         def currentDir = bat(script: '@echo %cd%', returnStdout: true).trim()
                         echo "Dossier courant (Windows): ${currentDir}"
