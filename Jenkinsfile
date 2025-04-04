@@ -18,7 +18,7 @@ pipeline {
                         --data "{ \\"client_id\\": \\"${env.CLIENT_ID}\\", \\"client_secret\\": \\"${env.CLIENT_SECRET}\\" }"
                     """, returnStdout: true).trim()
 
-                    response = (response =~ /(eyJ[a-zA-Z0-9\-_]+?\.[a-zA-Z0-9\-_]+?\.[a-zA-Z0-9\-_]+)/)[0]
+                    response = (response =~ /(eyJ[a-zA-Z0-9\-_]+?\.[a-zA-Z0-9\-_]+?\.[a-zA-Z0-9\-_]+)/)[0][0]
                     env.XRAY_TOKEN = response
                     echo "Token: ${env.XRAY_TOKEN}"
                 }
