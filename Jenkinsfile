@@ -37,13 +37,12 @@ pipeline {
             steps {
                 script {
                     // 1. Vérifier que le fichier existe
-                    def zipExists = fileExists 'features.zip'
+                    def zipExists = fileExists './features.zip'
                     if (!zipExists) {
                         error "Le fichier features.zip est introuvable dans le workspace"
                     }
 
-                    // 2. Créer le répertoire cible si inexistant
-                    bat 'mkdir "src\\test\\resources\\features" 2>nul || echo "Le répertoire existe déjà"'
+
 
                     // 3. Commande d'extraction corrigée
                     bat 'tar -xf features.zip -C "src\\test\\resources\\features"'
