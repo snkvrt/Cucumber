@@ -31,8 +31,14 @@ pipeline {
                             """)
 
                     }
+        }
+
+        stage('Unzip Exported Features') {
+                            steps {
+                               bat 'tar -xf features.zip -C src/test/resources/features/'
+                            }
                 }
 
-
-    }}
+    }
+}
 
