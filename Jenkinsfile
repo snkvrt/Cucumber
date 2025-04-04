@@ -1,34 +1,30 @@
-pipeline{
+pipeline {
     agent any
-    stages{
-        stage('authentication'){
-                    steps {
-                        script{
-                            def token = bat (script : 'curl -H "Content-Type: application/json" -X POST --data "{\\"client_id\\":\\"DA94515D482B438FA35A924E4B840298\\",\\"client_secret\\":\\"8da250e9eb7def34f65be632e6fc7e13a229059bcc8a9dbb1ae1e9c3deb33fdf\\"}" https://xray.cloud.getxray.app/api/v2/authenticate'
-                                , returnStdout: true)
-                            echo token
 
-                        }
+    environment {
+        XRAY_AUTH_URL = 'https://xray.cloud.getxray.app/api/v2/authenticate'
+        XRAY_EXPORT_URL = 'https://xray.cloud.getxray.app/api/v2/export/cucumber?keys=POEI20252-526'
+        CLIENT_ID = 'DA94515D482B438FA35A924E4B840298'
+        CLIENT_SECRET = '8da250e9eb7def34f65be632e6fc7e13a229059bcc8a9dbb1ae1e9c3deb33fdf'
+    }
 
-                    }
-        }
-        stage('build'){
-            steps{
-                bat 'mvn clean'
+    stages {
+        stage('Authenticate with Xray') {
+            steps {
+                script {
+                    def response = bat(script: """
+                        curl -H "Content-Type: application/json" -X POST ^
+                        ${env.XRAY_AUTH_URL} ^
+                        --data "{ \\"client_id\\": \\"${env.CLIENT_ID}\\", \\"client_secret\\": \\"${env.CLIENT_SECRET}\\" }"
+                    """, returnStdout: true).trim()
+
+                    response = response.replaceAll('"', '')
+                    env.XRAY_TOKEN = response
+                    echo "Token: ${env.XRAY_TOKEN}"
+                }
             }
         }
-        stage('test'){
-            steps{
-                bat 'mvn test  -Dcucumber.filter.tags="@KO"'
-            }
 
-        }
 
-    }
-    post{
-        always{
-             junit 'target/surefire-reports/*.xml'
-             cucumber fileIncludePattern :'target/cucumber.json'
-        }
-    }
-}
+    }}
+
