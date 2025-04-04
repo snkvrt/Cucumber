@@ -46,13 +46,6 @@ pipeline {
                         error "Le fichier features.zip est introuvable dans le workspace"
                     }else echo "zip features trouvé !"
 
-
-
-                    // 3. Commande d'extraction corrigée
-                    bat 'tar -xf features.zip -C C:\\Users\\IB\\.jenkins\\workspace\\pipCucumberXray\\src\\test\\resources\\features\\'
-
-                    // 4. Vérification (optionnelle)
-                    bat 'dir "src\\test\\resources\\features"'
                 }
             }
         }
