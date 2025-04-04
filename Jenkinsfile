@@ -39,17 +39,17 @@ pipeline {
             steps {
                 script {
                     // 1. Vérifier que le fichier existe
-                    def zipExists = fileExists "${env.WORKSPACE}\\features.zip"
+                    def zipExists = fileExists "C:\\Users\\IB\\.jenkins\\workspace\\pipCucumberXray\\features.zip"
                     if (!zipExists) {
                         def currentDir = bat(script: '@echo %cd%', returnStdout: true).trim()
                         echo "Dossier courant (Windows): ${currentDir}"
                         error "Le fichier features.zip est introuvable dans le workspace"
-                    }
+                    }else echo "zip features trouvé !"
 
 
 
                     // 3. Commande d'extraction corrigée
-                    bat 'tar -xf features.zip -C "src\\test\\resources\\features"'
+                    bat 'tar -xf features.zip -C C:\\Users\\IB\\.jenkins\\workspace\\pipCucumberXray\\src\\test\\resources\\features\\'
 
                     // 4. Vérification (optionnelle)
                     bat 'dir "src\\test\\resources\\features"'
