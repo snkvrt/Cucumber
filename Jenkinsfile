@@ -37,9 +37,11 @@ pipeline {
             steps {
                 script {
                     // 1. Vérifier que le fichier existe
-                    def zipExists = fileExists './features.zip'
+                    def zipExists = fileExists 'features.zip'
                     if (!zipExists) {
-                        error "Le fichier features.zip est introuvable dans le workspace"
+                        def currentDir = bat(script: '@echo %cd%', returnStdout: true).trim()
+                        echo "Dossier courant (Windows): ${currentDir}"
+                        error "Le fichier features.zip est introuvable dans le workspace".
                     }
 
 
