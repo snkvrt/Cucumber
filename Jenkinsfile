@@ -27,7 +27,7 @@ pipeline {
         stage('Get Xray Export') {
                     steps {
                         bat(script: """
-                        curl -H "Content-Type: application/json" -X GET -H "Authorization: Bearer ${env.XRAY_TOKEN}"  "https://xray.cloud.getxray.app/api/v2/export/cucumber?keys=POEI25-657"
+                        curl -H "Content-Type: application/json" -X GET -H "Authorization: Bearer ${env.XRAY_TOKEN}"  "https://xray.cloud.getxray.app/api/v2/export/cucumber?keys=POEI25-657" "-o features.zip"
                             """)
 
                     }
