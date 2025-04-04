@@ -26,29 +26,29 @@ pipeline {
                 }
             }
         }
-        stage('Get Xray Export') {
-                    steps {
-                        bat(script: """
-                        curl -H "Content-Type: application/json" -X GET -H "Authorization: Bearer ${env.XRAY_TOKEN}"  "https://xray.cloud.getxray.app/api/v2/export/cucumber?keys=POEI25-657" "-o features.zip"
-                            """)
-
-                    }
-        }
-
-        stage('Extract Features') {
-            steps {
-                script {
-                    // 1. Vérifier que le fichier existe
-                    def zipExists = fileExists "C:\\Users\\IB\\.jenkins\\workspace\\pipCucumberXray\\features.zip"
-                    if (!zipExists) {
-                        def currentDir = bat(script: '@echo %cd%', returnStdout: true).trim()
-                        echo "Dossier courant (Windows): ${currentDir}"
-                        error "Le fichier features.zip est introuvable dans le workspace"
-                    }else echo "zip features trouvé !"
-
-                }
-            }
-        }
+        // stage('Get Xray Export') {
+        //             steps {
+        //                 bat(script: """
+        //                 curl -H "Content-Type: application/json" -X GET -H "Authorization: Bearer ${env.XRAY_TOKEN}"  "https://xray.cloud.getxray.app/api/v2/export/cucumber?keys=POEI25-657" "-o features.zip"
+        //                     """)
+        //
+        //             }
+        // }
+        //
+        // stage('Extract Features') {
+        //     steps {
+        //         script {
+        //             // 1. Vérifier que le fichier existe
+        //             def zipExists = fileExists "C:\\Users\\IB\\.jenkins\\workspace\\pipCucumberXray\\features.zip"
+        //             if (!zipExists) {
+        //                 def currentDir = bat(script: '@echo %cd%', returnStdout: true).trim()
+        //                 echo "Dossier courant (Windows): ${currentDir}"
+        //                 error "Le fichier features.zip est introuvable dans le workspace"
+        //             }else echo "zip features trouvé !"
+        //
+        //         }
+        //     }
+        // }
 
     }
 }
