@@ -8,6 +8,7 @@ pipeline{
                             , returnStdout: true)
                         }
                         echo token
+                        echo ''
                     }
         }
         stage('build'){
