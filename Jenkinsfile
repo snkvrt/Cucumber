@@ -18,7 +18,8 @@ pipeline {
                             def response = bat(script: """
                                 curl -H "Content-Type: application/json" -X POST ^
                                 ${env.XRAY_AUTH_URL} ^
-                                --data "{ \"client_id\": \"${env.CLIENT_ID}\", \"client_secret\": \"${env.CLIENT_SECRET}\" }"
+                                --data "{ \"client_id\": \"${env.CLIENT_ID}\",
+                                \"client_secret\": \"${env.CLIENT_SECRET}\" }"
                             """, returnStdout: true).trim()
 
                             def lines = response.readLines()
@@ -27,8 +28,8 @@ pipeline {
                            echo "Xray Token: ${XRAY_TOKEN}"
                         }
                     }
-                }
-                }
+        }
+
         // stage('Get Xray Export') {
         //             steps {
         //                 bat(script: """
