@@ -1,15 +1,28 @@
-stage('Xray Authentication') {
-    steps {
-        script {
-            def token = sh(returnStdout: true, script: '''
-                curl -X POST \
-                -H "Content-Type: application/json" \
-                -d "{\\"client_id\\":\\"${CLIENT_ID}\\", \\"client_secret\\":\\"${SECRET_CLIENT}\\"}" \
-                https://xray.cloud.getxray.app/api/v2/authenticate
-            ''').trim()
+pipeline{
+    agent any
+    stages{
+        stage('authentication'){
+                    steps {
+                        bat 'curl -H "Content-Type: application/json" -X POST --data "{\\"client_id\\":\\"DA94515D482B438FA35A924E4B840298\\",\\"client_secret\\":\\"8da250e9eb7def34f65be632e6fc7e13a229059bcc8a9dbb1ae1e9c3deb33fdf\\"}" https://xray.cloud.getxray.app/api/v2/authenticate'
+                    }
+        }
+        stage('build'){
+            steps{
+                bat 'mvn clean'
+            }
+        }
+        stage('test'){
+            steps{
+                bat 'mvn test  -Dcucumber.filter.tags="@KO"'
+            }
 
-            env.XRAY_TOKEN = token
-            echo "Xray Token: ${token}"
+        }
+
+    }
+    post{
+        always{
+             junit 'target/surefire-reports/*.xml'
+             cucumber fileIncludePattern :'target/cucumber.json'
         }
     }
 }
