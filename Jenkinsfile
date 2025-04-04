@@ -41,7 +41,7 @@ pipeline {
                     if (!zipExists) {
                         def currentDir = bat(script: '@echo %cd%', returnStdout: true).trim()
                         echo "Dossier courant (Windows): ${currentDir}"
-                        error "Le fichier features.zip est introuvable dans le workspace".
+                        error "Le fichier features.zip est introuvable dans le workspace"
                     }
 
 
