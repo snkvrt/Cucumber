@@ -35,8 +35,7 @@ pipeline {
 
         stage('Unzip Exported Features') {
                             steps {
-                               bat 'tar -xf features.zip -C src/test/resources/features/'
-                            }
+                                powershell Expand-Archive -Path xray_features.zip -DestinationPath src\test\resources\features -Force                            }
                 }
 
     }
